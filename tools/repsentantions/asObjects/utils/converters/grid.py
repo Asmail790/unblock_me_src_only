@@ -38,6 +38,13 @@ class DefaultGridConverter(IGridConverter[Sequence[Block]]):
             y = block_props.top
             clazz = block_props.clazz
 
+            block_type = ML_STR_TO_PY_BLOCK_OBJECT[ML_NBR_TO_STR[block_props.clazz]]
+            new_block_type = block_type not in self.__block_props
+
+            if new_block_type:
+                self.__block_props[block_type] = (
+                    block_props.width(), block_props.height())
+
             image_pos = (x, y)
             logical_pos = self.__to_grid(self.__grid_props, image_pos)
             py_block_clazz = ML_STR_TO_PY_BLOCK_OBJECT[ML_NBR_TO_STR[clazz]]
