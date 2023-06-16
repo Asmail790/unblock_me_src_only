@@ -1,6 +1,6 @@
 from tools.repsentantions.asObjects.utils.guiders.default import DeafaultJPI
 from tools.common.interafaces.java_to_python_interface import JavaToPythonInterFace, BoundingBox
-from com.example.unblockmesolver import R
+from com.example.unblockmesolver.service.UI import NextStep
 from android.graphics import RectF
 
 
