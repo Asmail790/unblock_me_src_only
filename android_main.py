@@ -7,7 +7,7 @@ from android.graphics import RectF
 interface: JavaToPythonInterFace = DeafaultJPI()
 
 
-def k(blocks_rects, grid_rect):
+def infer(blocks_rects, grid_rect):
     blocks = [BoundingBox(
         clazz=x.classIndex,
         left=x.rect.left,
