@@ -28,15 +28,15 @@ def k(blocks_rects, grid_rect):
 
     from_rect = RectF(
         nextStep.from_.left,
-        nextStep.from_.left.top,
-        nextStep.from_.left.right,
-        nextStep.from_.left.bottom
+        nextStep.from_.top,
+        nextStep.from_.right,
+        nextStep.from_.bottom
     )
     to_rect = RectF(
         nextStep.to.left,
-        nextStep.to.left.top,
-        nextStep.to.left.right,
-        nextStep.to.left.bottom
+        nextStep.to.top,
+        nextStep.to.right,
+        nextStep.to.bottom
     )
     explation = nextStep.message
 

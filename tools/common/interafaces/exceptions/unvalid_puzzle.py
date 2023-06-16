@@ -1,5 +1,13 @@
 from collections.abc import Sequence
-from exceptiongroup import ExceptionGroup
+
+import sys
+
+if sys.version_info.major > 3 or sys.version_info.minor >= 11:
+    from builtins import ExceptionGroup
+else:
+    from exceptiongroup import ExceptionGroup
+
+
 from tools.common.interafaces.exceptions.general import GuiderException
 
 

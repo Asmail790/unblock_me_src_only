@@ -6,7 +6,7 @@ from tools.common.interafaces.java_to_python_interface import JavaToPythonInterF
 from tools.common.constants import ML_ClASS_NBR, is_ML_NBR
 from tools.repsentantions.asObjects.utils.datagenerators.yolov5datasetgenerator import AddGridLabel
 model = YOLO(
-    '/home/main/Desktop/asmail_kod/drag-and-drop/runs/detect/train/weights/best.pt')
+    '/home/main/Desktop/asmail_kod/drag-and-drop/runs/detect/block_dector_with_grid/weights/best.torchscript')
 # x1,y2 = 10,203
 # x2,y2 = 283,477
 # width = 295,640
@@ -33,4 +33,4 @@ def test(src: Path):
     print(interface.guide(bounding_boxes))
 
 
-test(Path("/home/main/Desktop/asmail_kod/drag-and-drop/datasets/unblockme/images/train/6.png"))
+test(Path("/home/main/Desktop/asmail_kod/drag-and-drop/other/resized_screenshot.JPG"))
