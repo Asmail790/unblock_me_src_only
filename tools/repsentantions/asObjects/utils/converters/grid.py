@@ -13,11 +13,11 @@ class DefaultGridConverter(IGridConverter[Sequence[Block]]):
 
     def __init__(self, bounding: Collection[BoundingBox]) -> None:
         blocks = filter(
-            lambda x: ML_NBR_TO_STR[x.clazz] != 'GRID',
+            lambda x: ML_NBR_TO_STR[x.clazz] != 'Grid',
             bounding
         )
         self.__grid_props = list(filter(
-            lambda x: ML_NBR_TO_STR[x.clazz] == 'GRID',
+            lambda x: ML_NBR_TO_STR[x.clazz] == 'Grid',
             bounding
         ))[0]
 
@@ -44,7 +44,7 @@ class DefaultGridConverter(IGridConverter[Sequence[Block]]):
             return py_block_clazz(logical_pos)
 
         bounding_boxes = [
-            box for box in bounding_boxes if ML_NBR_TO_STR[box.clazz] != 'GRID']
+            box for box in bounding_boxes if ML_NBR_TO_STR[box.clazz] != 'Grid']
         logical_grid = [convert(box) for box in bounding_boxes]
 
         return logical_grid
