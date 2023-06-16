@@ -61,7 +61,8 @@ class DefaultGridConverter(IGridConverter[Sequence[Block]]):
             ml_class_str = PY_BLOCK_OBJECT_TO_ML_STR[type(block)]
             ml_class_nbr = ML_STR_TO_ML_NBR[ml_class_str]
 
-            return BoundingBox(ml_class_nbr, x, y, x + width, y + height)
+            return BoundingBox(ml_class_nbr, left=x, top=y,
+                               right=x + width, bottom=y + height)
 
         blocks_bounding_boxes = [convert(block) for block in blocks]
         return BASIC_GRID_OUTPUT(
