@@ -42,7 +42,13 @@ class JavaToPythonInterFace(ABC):
     should be contained JavaToPythonInterFace.
     """
     @abstractmethod
-    def guide(
+    def guide_one_step(
         self,
         blockprops: Sequence[BoundingBox]
-    ) -> NextStep | GuiderException: ...
+    ) -> NextStep:
+        pass
+
+    @abstractmethod
+    def guide_multiple_step(
+            self, blockprops: Sequence[BoundingBox]) -> Sequence[NextStep]:
+        pass

@@ -2,12 +2,27 @@ from tools.repsentantions.asObjects.utils.guiders.default import DeafaultJPI
 from tools.common.interafaces.java_to_python_interface import JavaToPythonInterFace, BoundingBox
 from com.example.unblockmesolver.service.UI import NextStep
 from android.graphics import RectF
+from java import jarray
 
 
 interface: JavaToPythonInterFace = DeafaultJPI()
 
 
 def infer(blocks_rects, grid_rect):
+
+    boundingBoxes = _convert_py_boundingboxes(blocks_rects, grid_rect)
+    nextStep = interface.guide_one_step(boundingBoxes)
+    return _convert_java_NextStep(nextStep)
+
+
+def infer_all_steps(blocks_rects, grid_rect):
+    boundingBoxes = _convert_py_boundingboxes(blocks_rects, grid_rect)
+    nextSteps = interface.guide_multiple_step(boundingBoxes)
+    steps = [_convert_java_NextStep(step) for step in nextSteps]
+    return jarray(NextStep)(steps)
+
+
+def _convert_py_boundingboxes(blocks_rects, grid_rect):
     blocks = [BoundingBox(
         clazz=x.classIndex,
         left=x.rect.left,
@@ -24,20 +39,22 @@ def infer(blocks_rects, grid_rect):
         top=grid_rect.rect.top,
         bottom=grid_rect.rect.bottom
     )
-    nextStep = interface.guide(blocks + [gridprops])
+    return blocks + [gridprops]
 
+
+def _convert_java_NextStep(py_nextStep):
     from_rect = RectF(
-        nextStep.from_.left,
-        nextStep.from_.top,
-        nextStep.from_.right,
-        nextStep.from_.bottom
+        py_nextStep.from_.left,
+        py_nextStep.from_.top,
+        py_nextStep.from_.right,
+        py_nextStep.from_.bottom
     )
     to_rect = RectF(
-        nextStep.to.left,
-        nextStep.to.top,
-        nextStep.to.right,
-        nextStep.to.bottom
+        py_nextStep.to.left,
+        py_nextStep.to.top,
+        py_nextStep.to.right,
+        py_nextStep.to.bottom
     )
-    explation = nextStep.message
+    explation = py_nextStep.message
 
     return NextStep(from_rect, to_rect, explation)

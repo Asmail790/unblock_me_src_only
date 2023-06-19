@@ -1,6 +1,7 @@
 from collections.abc import Mapping
 from typing import Sequence
 from uuid import UUID
+from tools.common.interafaces.exceptions.general import GuiderException
 
 from tools.common.interafaces.java_to_python_interface import BoundingBox, NextStep
 from tools.common.interafaces.java_to_python_interface import JavaToPythonInterFace
@@ -40,7 +41,8 @@ class DeafaultJPI(JavaToPythonInterFace):
         self.__grid_converter: DefaultGridConverter | None = None
         self.__next_step_converter: None | DefaultInstructionConverter = None
 
-    def guide(self, boundingboxes: Sequence[BoundingBox]) -> NextStep:
+    def guide_one_step(
+            self, boundingboxes: Sequence[BoundingBox]) -> NextStep:
 
         if self.__grid_converter is None or self.__next_step_converter is None:
             self.__grid_converter = DefaultGridConverter(boundingboxes)
@@ -51,4 +53,19 @@ class DeafaultJPI(JavaToPythonInterFace):
         _, edges = self.__solver.solve(grid)
         step = edges[0]
 
-        return self.__next_step_converter.convert_to_basic_instruction(step)
+        return self.__next_step_converter.convert_to_basic_instruction(
+            step)
+
+    def guide_multiple_step(
+            self, boundingboxes: Sequence[BoundingBox]) -> Sequence[NextStep]:
+
+        if self.__grid_converter is None or self.__next_step_converter is None:
+            self.__grid_converter = DefaultGridConverter(boundingboxes)
+            self.__next_step_converter = DefaultInstructionConverter(
+                self.__grid_converter)
+
+        grid = Grid(self.__grid_converter.convert_from_grid(boundingboxes))
+        _, edges = self.__solver.solve(grid)
+
+        return [self.__next_step_converter.convert_to_basic_instruction(
+            edge) for edge in edges]
